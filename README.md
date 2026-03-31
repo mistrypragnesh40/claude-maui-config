@@ -70,11 +70,11 @@ cp ~/.claude/shared-maui/templates/CLAUDE.md.template /path/to/your-project/CLAU
 
 ### Global Skills (Separate Setup)
 
+Skills are installed globally at `~/.claude/skills/`. They are included in this repo:
+
 ```bash
-git clone https://github.com/luongnv89/claude-howto.git /tmp/claude-howto
-cp -r /tmp/claude-howto/03-skills/code-review ~/.claude/skills/
-cp -r /tmp/claude-howto/03-skills/refactor ~/.claude/skills/
-rm -rf /tmp/claude-howto
+cp -r ~/.claude/shared-maui/skills/code-review ~/.claude/skills/
+cp -r ~/.claude/shared-maui/skills/refactor ~/.claude/skills/
 ```
 
 ## No Auto-Commits
