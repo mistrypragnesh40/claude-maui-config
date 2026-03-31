@@ -1,0 +1,60 @@
+# .NET MAUI .gitignore
+# Copy this to your project root
+
+## Build output
+bin/
+obj/
+
+## IDE
+.vs/
+.vscode/
+*.user
+*.suo
+*.sln.docstates
+
+## Rider
+.idea/
+*.sln.iml
+
+## macOS
+.DS_Store
+*.swp
+*~.nib
+Thumbs.db
+
+## Secrets — NEVER commit
+appsettings.json
+appsettings.*.json
+secrets.json
+*.p12
+*.pfx
+*.key
+*.pem
+
+## iOS specific
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## Android specific
+*.apk
+*.aab
+*.keystore
+google-services.json
+
+## iOS provisioning
+*.mobileprovision
+*.provisionprofile
+
+## NuGet
+*.nupkg
+**/packages/*
+!packages/build/
+
+## Test results
+TestResults/
+coverage.xml
+*.trx
+
+## Claude Code local settings (project-specific, don't share)
+.claude/settings.local.json

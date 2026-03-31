@@ -1,0 +1,34 @@
+# [PROJECT NAME]
+
+## Project Overview
+- **Type**: .NET MAUI mobile application
+- **Platforms**: iOS, Android
+- **Language**: C# (.cs) and XAML (.xaml)
+- **Framework**: .NET [VERSION]
+
+## Architecture
+- MVVM pattern (ViewModels + XAML Views)
+- Pages in `[PAGES_PATH]`
+- Shared modules in `[MODULES_PATH]`
+- Tests in `[TESTS_PATH]`
+
+## Code Standards
+- **C# files**: PascalCase for classes, methods, properties. camelCase for local variables
+- **XAML files**: Consistent indentation, use x:Name for named elements
+- **ViewModels**: Inherit from BaseViewModel, use INotifyPropertyChanged
+- **Navigation**: Shell navigation
+- **Async**: Use async/await, never block with .Result or .Wait()
+
+## Common Commands
+| Command | Purpose |
+|---------|---------|
+| `dotnet build` | Build solution |
+| `dotnet test` | Run tests |
+| `dotnet restore` | Restore NuGet packages |
+
+## Rules
+- Never hardcode API keys, passwords, or connection strings
+- Always use SecureStorage for sensitive data
+- Handle null checks on all API responses
+- Use try-catch on all async service calls
+- XAML bindings must match ViewModel property names exactly
