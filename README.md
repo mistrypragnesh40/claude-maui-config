@@ -1,65 +1,45 @@
-# Claude Code — Shared MAUI Config
+# Shared MAUI AI Config
 
-Shared commands, agents, hooks, and templates for all .NET MAUI projects.
+Shared configuration for AI-assisted .NET MAUI development. Supports **Claude Code** and **GitHub Copilot**.
 
 ## What's Included
 
-### Commands (type `/command` in Claude Code)
+### Claude Code (full feature set)
 
-| Command | What It Does |
-|---------|-------------|
-| `/build` | Build solution, show errors in clean format |
-| `/fix-build` | Auto-diagnose and fix build errors |
-| `/commit` | Auto-generate commit message |
-| `/pr` | Build, test, prepare pull request summary |
-| `/unit-test` | Generate unit tests for ViewModels/Services |
-| `/optimize` | Optimize selected code |
-| `/doc-refactor` | Refactor + add XML documentation |
-| `/nuget-audit` | Check for vulnerable/outdated NuGet packages |
-| `/accessibility` | Check XAML for missing accessibility labels |
-| `/xaml-check` | Validate XAML bindings match ViewModel properties |
-| `/perf` | Find performance issues (main thread blocking, memory leaks, layout) |
+| Feature | Contents |
+|---------|----------|
+| **Commands** | `/build`, `/fix-build`, `/commit`, `/pr`, `/unit-test`, `/optimize`, `/doc-refactor`, `/nuget-audit`, `/accessibility`, `/xaml-check`, `/perf` |
+| **Agents** | `debugger`, `code-reviewer`, `secure-reviewer`, `test-engineer` |
+| **Hooks** | Auto-format on save, security scan on save, context tracker |
+| **Skills** | Code review (with scripts + templates), Refactoring (Fowler methodology) |
+| **Templates** | `CLAUDE.md`, `.editorconfig`, `.gitignore` |
 
-### Agents (Claude uses when needed)
+### GitHub Copilot
 
-| Agent | What It Does |
-|-------|-------------|
-| `debugger` | Diagnose MAUI build errors, binding issues, crashes |
-| `code-reviewer` | Review C#/XAML for quality and MAUI-specific issues |
-| `secure-reviewer` | Read-only security audit (hardcoded keys, insecure storage) |
-| `test-engineer` | Write xUnit/NUnit tests for ViewModels and Services |
+| Feature | Contents |
+|---------|----------|
+| **Instructions** | `.github/copilot-instructions.md` — consolidated MAUI rules covering security, performance, accessibility, code quality, testing, XAML bindings, and refactoring |
+| **Templates** | `.editorconfig`, `.gitignore` (shared with Claude) |
 
-### Hooks (run automatically)
+> Copilot doesn't support slash commands, agents, hooks, or skills — all guidance is consolidated into a single instructions file that Copilot reads automatically.
 
-| Hook | What It Does |
-|------|-------------|
-| `format-code.sh` | Auto-format .cs and .xaml files after every write/edit |
-| `security-scan.sh` | Warn about hardcoded secrets |
-| `context-tracker.py` | Show context window usage |
+---
 
-### Templates
+## Setup — Claude Code
 
-| Template | What It Is |
-|----------|-----------|
-| `CLAUDE.md.template` | Reusable CLAUDE.md template for new MAUI projects |
-| `.editorconfig` | C#/XAML formatting rules (copy to project root) |
-| `.gitignore` | MAUI-specific gitignore (copy to project root) |
-
-## Setup
-
-### New Machine (Restore from Git)
+### 1. Clone the config
 
 ```bash
 git clone https://github.com/mistrypragnesh40/claude-maui-config.git ~/.claude/shared-maui
 ```
 
-### Link to Any MAUI Project
+### 2. Link to any MAUI project
 
 ```bash
 ~/.claude/shared-maui/setup-project.sh /path/to/your-maui-project
 ```
 
-### Copy Templates to Project (Optional)
+### 3. Copy templates (optional)
 
 ```bash
 cp ~/.claude/shared-maui/templates/.editorconfig /path/to/your-project/
@@ -68,21 +48,83 @@ cp ~/.claude/shared-maui/templates/CLAUDE.md.template /path/to/your-project/CLAU
 # Then edit CLAUDE.md with project-specific details
 ```
 
-### Global Skills (Separate Setup)
-
-Skills are installed globally at `~/.claude/skills/`. They are included in this repo:
+### 4. Install global skills (optional)
 
 ```bash
 cp -r ~/.claude/shared-maui/skills/code-review ~/.claude/skills/
 cp -r ~/.claude/shared-maui/skills/refactor ~/.claude/skills/
 ```
 
+---
+
+## Setup — GitHub Copilot
+
+### 1. Clone the config (if not already done)
+
+```bash
+git clone https://github.com/mistrypragnesh40/claude-maui-config.git ~/.claude/shared-maui
+```
+
+### 2. Run the Copilot setup script
+
+```bash
+~/.claude/shared-maui/copilot/setup-copilot.sh /path/to/your-maui-project
+```
+
+This copies:
+- `.github/copilot-instructions.md` — Copilot reads this automatically
+- `.editorconfig` — shared formatting rules
+- `.gitignore` — MAUI-specific ignores
+
+### 3. That's it
+
+Copilot in VS Code will automatically pick up the instructions from `.github/copilot-instructions.md`. No extension configuration needed.
+
+---
+
+## Using Both Together
+
+You can set up both Claude Code and Copilot for the same project:
+
+```bash
+# Clone once
+git clone https://github.com/mistrypragnesh40/claude-maui-config.git ~/.claude/shared-maui
+
+# Set up Claude Code
+~/.claude/shared-maui/setup-project.sh /path/to/your-project
+
+# Set up Copilot
+~/.claude/shared-maui/copilot/setup-copilot.sh /path/to/your-project
+```
+
+They don't conflict — Claude uses `.claude/` and Copilot uses `.github/`.
+
+---
+
+## Feature Comparison
+
+| Feature | Claude Code | Copilot |
+|---------|:-----------:|:-------:|
+| Custom instructions | CLAUDE.md | copilot-instructions.md |
+| Slash commands | 11 commands | Not supported |
+| AI agents | 4 agents | Not supported |
+| Auto-format on save | Hook | Not supported |
+| Security scan on save | Hook | Not supported |
+| Context tracking | Hook | Not supported |
+| Code review skill | Full workflow | Instructions only |
+| Refactoring skill | Fowler methodology | Instructions only |
+| .editorconfig | Shared | Shared |
+| .gitignore | Shared | Shared |
+
+---
+
 ## No Auto-Commits
 
-Nothing in this config commits automatically. The only way a commit happens is if you type `/commit` and approve it.
+Nothing in this config commits automatically. The only way a commit happens is if you explicitly request it.
 
 | Type | Auto-runs? | Commits? |
 |------|-----------|----------|
-| Hooks | Yes | Never |
-| Commands | Only when you type them | Only `/commit` and `/pr`, with your approval |
+| Hooks | Yes (Claude only) | Never |
+| Commands | Only when you type them (Claude only) | Only `/commit` and `/pr`, with your approval |
 | Agents | When Claude needs them | Never |
+| Copilot instructions | Always active | Never |
